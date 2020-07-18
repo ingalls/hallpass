@@ -1,0 +1,13 @@
+{
+  "name": "hallpass",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "git@github.com:ingalls/hallpass",
+  "author": "ingalls <nick@ingalls.ca>",
+  "license": "MIT",
+  "dependencies": {
+    "minimist": "^1.2.5",
+    "node-cron": "^2.0.3",
+    "request": "^2.88.2"
+  }
+}
