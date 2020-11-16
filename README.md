@@ -1,4 +1,4 @@
-<h1 align=center>hallpass</h1>
+<h1 align=center>Hall Pass</h1>
 
 <p align=center>Check if a service is down and send a Twilio Text</p>
 
