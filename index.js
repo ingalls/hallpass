@@ -34,11 +34,18 @@ if (!url) {
     console.error('ERROR: valid --timeout parameter must be an integer');
     console.error('');
     process.exit(1);
+} else if (argv.periods && isNaN(parseInt(argv.periods))) {
+    console.error('');
+    console.error('ERROR: valid --periods parameter must be an integer');
+    console.error('');
+    process.exit(1);
 }
 
 const notify = new Notify(url, argv.to);
 
 cron.schedule('* * * * *', test);
+
+let failperiods = 0;
 
 function test() {
     console.error(`ok - ${new Date()}: HealthCheck`);
@@ -53,12 +60,16 @@ function test() {
     }, (err, res) => {
         if (err) {
             console.error(`not ok - ${err}`);
-            return notify.me(err);
-        }
 
-        if (res.statusCode !== 200) {
+            failperiods++;
+            if (failperiods >= (parseInt(argv.periods) || 1)) return notify.me(err);
+        } else if (res.statusCode !== 200) {
             console.error(`not ok - ${res.body}`);
-            return notify.me(new Error(`${res.statusCode}: ${res.body}`));
+
+            failperiods++;
+            if (failperiods >= (parseInt(argv.periods) || 1)) return notify.me(new Error(`${res.statusCode}: ${res.body}`));
+        } else {
+            failperiods = 0;
         }
     });
 }
