@@ -12,12 +12,15 @@ case but I wouldn't consider it "production" software. Use at your own risk. Con
 Monitor the status of a website and alert the user if it goes down
 
 Usage:
-   ./hallpass <HealthCheck URL> [--to <number>]
+   ./hallpass <HealthCheck URL> [--to <number>] [--timeout <s>] [--period <n>]
 
 Environment Variables
    TWILIO_ACCOUNT      The SID of the twilio account to send messages from
    TWILIO_TOKEN        The API token of the twilio account
 Options:
    --to <number>       Phone number to text (format +1##########)
+   --timeout <seconds> Number of seconds to for HTTP response
+   --periods <number>  Number of consecutive minutes to fail
+
 
 ```
