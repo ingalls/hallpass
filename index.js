@@ -7,7 +7,7 @@ const Notify = require('./lib/notify');
 const help = require('./lib/help');
 const argv = require('minimist')(process.argv, {
     boolean: ['help'],
-    string: ['to']
+    string: ['to', 'timeout']
 });
 
 if (argv.help) return help();
@@ -29,6 +29,11 @@ if (!url) {
     console.error('');
     help();
     process.exit(1);
+} else if (argv.timeout && isNaN(parseInt(argv.timeout))) {
+    console.error('');
+    console.error('ERROR: valid --timeout parameter must be an integer');
+    console.error('');
+    process.exit(1);
 }
 
 const notify = new Notify(url, argv.to);
@@ -41,7 +46,7 @@ function test() {
     request({
         url: url,
         method: 'GET',
-        timeout: 500,
+        timeout: parseInt(args.timeout) || 500,
         headers: {
             'User-Agent': `hallpass@${pkg.version}`
         }
